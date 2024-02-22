@@ -1,0 +1,26 @@
+#version de docker compose
+version: "3.8"
+services:
+  app:
+    container_name: "dc_container"
+    build: .
+    ports:
+      - "9095:9095"
+#    environment:
+#      NAME_BD: "mongo_db"
+    depends_on:
+      - database_mongo
+
+  database_mongo:
+    container_name: "mongo_db"
+    image: "mongo"
+    ports:
+      - "27018:27017"
+    volumes:
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+
+volumes:
+  mongo-data:
+
+
+
